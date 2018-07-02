@@ -41,4 +41,4 @@ This app polls Steam's API for information about state of the "Summer Saliens"-g
 
 ### If you use API, why repository includes JSON-files?
 
-JSON-files are provided in case someone wants to play with the code after the Steam's 2018 Summer Sale -event has ended and you can't get proper data from API anymore.
+JSON-files are provided in case someone wants to play with the code after the Steam's 2018 "Intergalactic Summer Sale"-event has ended and you can't get proper game state data from API anymore.
