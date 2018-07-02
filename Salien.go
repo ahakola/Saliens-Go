@@ -16,8 +16,6 @@ Totally useless after the even goes away (July 4th at 10am PST).
 If you are after some fast copy&paste -code for your school/course work, I
 suggest you copy from someone with better knowhow than me for your own sake,
 because I'm not an expert, just hobbyist and this is my first Go-project.
-
-REM FIRST BOSS IN -> AFTER
 */
 
 package main
@@ -161,9 +159,6 @@ func main() {
 		// Iterate through all active planets (non-active and already captured planets are skipped).
 		for _, Planet := range p.Response.Planets {
 			if Planet.State.Active == true && Planet.State.Captured == false {
-				// Show some data about Planets
-				//fmt.Printf("%v |  %v%%  | %v\n", lpad(Planet.Id, " ", 5), lpad(fmt.Sprintf("%.2f", Planet.State.CaptureProgress * 100), " ", 5), Planet.State.Name)
-
 				// Create http-request for getting zones of invidual planet
 				req, err := http.NewRequest(http.MethodGet, getUrl("GetPlanet") + "&id=" + Planet.Id, nil)
 				if err != nil {
@@ -258,12 +253,7 @@ func main() {
 
 		// Sleep until we have filled the POLLING_INTERVAL
 		elapsed := now.Sub(startIteration)
-		//fmt.Printf("\nOperations done in %-3f. now waiting for %.3f seconds...\n", elapsed.Seconds(), (POLLING_INTERVAL * time.Second - elapsed).Seconds())
-
 		time.Sleep(POLLING_INTERVAL * time.Second - elapsed)
-
-		now = time.Now()
-		//fmt.Printf("Last iteration took %.3f seconds.\nScript has been running for %v.\n\n\n", now.Sub(startIteration).Seconds(), now.Sub(startScript).Round(time.Second))
 
 		// End of while true -loop
 	}
