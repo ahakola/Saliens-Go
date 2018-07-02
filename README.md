@@ -1,6 +1,8 @@
 # Saliens-Go
 ## 2018 Summer Saliens - Bosswatch
-Detecting bosses on active planets during 2018 Steam Summer Sale. App polls Steam's API for information about state of the game and parses json-responses to detect if boss has spawn or died. Written in Go.
+Detecting bosses on active planets during Steam's 2018 "Intergalactic Summer Sale".
+
+This app polls Steam's API for information about state of the "Summer Saliens"-game and parses json-responses to detect if these high experience yielding boss monsters have spawned or died and alert user. Written in Go.
 
 ### Example output:
 ```
