@@ -36,3 +36,7 @@ Example output:
 - Encounter lasted ~7m17s
 - Estimate for maximum EXP gain is 218500 + bonuses
 ```
+
+---
+
+JSON-files are provided in case someone wants to play with the code after the Steam event has ended and you can't get proper data from servers anymore.
