@@ -105,7 +105,7 @@ func main() {
 		fmt.Println("\n" + lpad("!", "!", 60))
 		fmt.Printf("[%v] >>> Error, waiting little bit and trying to continue...\n", time.Now().Format(TIMESTAMP))
 		time.Sleep(time.Second * POLLING_INTERVAL * 2)
-		fmt.Printf("[%v] >>> Continue\n", time.Now().Format(TIMESTAMP))
+		fmt.Printf("[%v] >>> Continuing...\n", time.Now().Format(TIMESTAMP))
 		errored = false
 	}
 
@@ -118,7 +118,7 @@ func main() {
 		// Create http-request for getting list of planets
 		req, err := http.NewRequest(http.MethodGet, getUrl("GetPlanets"), nil)
 		if err != nil {
-			fmt.Println("P-REQ: " + err.Error())
+			fmt.Println("\n! P-REQ: " + err.Error())
 			errored = true
 			goto TryToSelfFix
 			//log.Fatal(err)
@@ -132,7 +132,7 @@ func main() {
 		// Send http-request
 		res, getErr := salienClient.Do(req)
 		if getErr != nil {
-			fmt.Println("P-RES: " + getErr.Error())
+			fmt.Println("\n! P-RES: " + getErr.Error())
 			errored = true
 			goto TryToSelfFix
 			//log.Fatal(getErr)
@@ -141,14 +141,14 @@ func main() {
 		// Read results
 		body, readErr := ioutil.ReadAll(res.Body)
 		if readErr != nil {
-			log.Fatal("P-READ: " + readErr.Error())
+			log.Fatal("\n! P-READ: " + readErr.Error())
 		}
 
 		// Parse json
 		p:= new(SalienAPIResponse)
 		jsonErr := json.Unmarshal(body, &p)
 		if jsonErr != nil {
-			log.Fatal("P-JSON: " + jsonErr.Error())
+			log.Fatal("\n! P-JSON: " + jsonErr.Error())
 		}
 
 		// Validate GameVersion to make sure we know what to do with it.
@@ -162,7 +162,7 @@ func main() {
 				// Create http-request for getting zones of invidual planet
 				req, err := http.NewRequest(http.MethodGet, getUrl("GetPlanet") + "&id=" + Planet.Id, nil)
 				if err != nil {
-					fmt.Println("Z-REQ: " + err.Error())
+					fmt.Println("\n! Z-REQ: " + err.Error())
 					errored = true
 					goto TryToSelfFix
 					//log.Fatal(err)
@@ -176,7 +176,7 @@ func main() {
 				// Send http-request
 				res, getErr := salienClient.Do(req)
 				if getErr != nil {
-					fmt.Println("Z-RES: " + getErr.Error())
+					fmt.Println("\n! Z-RES: " + getErr.Error())
 					errored = true
 					goto TryToSelfFix
 					//log.Fatal(getErr)
@@ -185,14 +185,14 @@ func main() {
 				// Read results
 				body, readErr := ioutil.ReadAll(res.Body)
 				if readErr != nil {
-					log.Fatal("Z-READ: " + readErr.Error())
+					log.Fatal("\n! Z-READ: " + readErr.Error())
 				}
 
 				// Parse json
 				z := new(SalienAPIResponse)
 				jsonErr := json.Unmarshal(body, &z)
 				if jsonErr != nil {
-					log.Fatal("Z-JSON: " + jsonErr.Error())
+					log.Fatal("\n! Z-JSON: " + jsonErr.Error())
 				}
 
 				// Validate GameVersion once again eventhough we got this far with previous request.
