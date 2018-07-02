@@ -1,8 +1,8 @@
 # Saliens-Go
 ## 2018 Summer Saliens - Bosswatch
-Detecting bosses on active planets during 2018 Steam Summer Sale. Written in Go.
+Detecting bosses on active planets during 2018 Steam Summer Sale. App polls Steam's API for information about state of the game and parses json-responses to detect if boss has spawn or died. Written in Go.
 
-Example output:
+###Example output:
 ```
 ------------------------------------------------------------
 2018 Summer Saliens - Bosswatch
@@ -37,6 +37,6 @@ Example output:
 - Estimate for maximum EXP gain is 218500 + bonuses
 ```
 
----
+### If you use API, why repository includes JSON-files?
 
-JSON-files are provided in case someone wants to play with the code after the Steam event has ended and you can't get proper data from servers anymore.
+JSON-files are provided in case someone wants to play with the code after the Steam's 2018 Summer Sale -event has ended and you can't get proper data from API anymore.
