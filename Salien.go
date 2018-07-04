@@ -84,7 +84,7 @@ func getUrl(s string) string { // Wrote this just to keep the line length shorte
 // Setting up variables
 var startScript, startBoss, startIteration, now, lastBossKilled time.Time
 var bossFightActive, bossFightRegistered, errored bool
-var bossCount int
+var bossCount, planetCount int
 
 func main() {
 	salienClient := http.Client{
@@ -114,6 +114,7 @@ func main() {
 
 		startIteration = time.Now()
 		bossFightActive = false // Set initial value to false
+		planetCount = 0 // Count planets to detect if we captured them all
 
 		// Create http-request for getting list of planets
 		req, err := http.NewRequest(http.MethodGet, getUrl("GetPlanets"), nil)
@@ -159,6 +160,8 @@ func main() {
 		// Iterate through all active planets (non-active and already captured planets are skipped).
 		for _, Planet := range p.Response.Planets {
 			if Planet.State.Active == true && Planet.State.Captured == false {
+				planetCount += 1 // Active planet found
+
 				// Create http-request for getting zones of invidual planet
 				req, err := http.NewRequest(http.MethodGet, getUrl("GetPlanet") + "&id=" + Planet.Id, nil)
 				if err != nil {
@@ -230,6 +233,7 @@ func main() {
 						if bossCount > 1 {
 							fmt.Printf("- %v bosses detected in %v\n", bossCount, startBoss.Sub(startScript).Round(time.Second))
 							fmt.Printf("- Last boss killed %v ago\n", startBoss.Sub(lastBossKilled).Round(time.Second))
+							fmt.Printf("- Average wait time between bosses is %v", (startBoss.Sub(startScript) / time.Duration(bossCount)).Round(time.Second))
 						} else {
 							fmt.Printf("- First boss detected %v after the start\n", startBoss.Sub(startScript).Round(time.Second))
 						}
@@ -250,6 +254,10 @@ func main() {
 			fmt.Println("\n" + lpad("-", "-", 60))
 			fmt.Printf("[%v] <<< BOSS IS GONE >>>\n\n- Encounter lasted ~%v\n- Estimate for maximum EXP gain is %v + bonuses\n", now.Format(TIMESTAMP), encounterLenght, experienceEst)
 		}
+		if planetCount == 0 { // No active planets found, we must have conquered them all! Ready to exit then
+			fmt.Printf("[%v] === ALL PLANETS HAVE BEEN CONQUERED ===\n- %v bosses detected in %v\n- Average wait time between bosses was %v", now.Format(TIMESTAMP), bossCount, startBoss.Sub(startScript).Round(time.Second), (startBoss.Sub(startScript) / time.Duration(bossCount)).Round(time.Second))
+			goto ExitPoint
+		}
 
 		// Sleep until we have filled the POLLING_INTERVAL
 		elapsed := now.Sub(startIteration)
@@ -257,4 +265,6 @@ func main() {
 
 		// End of while true -loop
 	}
+
+	ExitPoint:
 }
