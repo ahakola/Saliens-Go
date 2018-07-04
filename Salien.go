@@ -255,7 +255,12 @@ func main() {
 			fmt.Printf("[%v] <<< BOSS IS GONE >>>\n\n- Encounter lasted ~%v\n- Estimate for maximum EXP gain is %v + bonuses\n", now.Format(TIMESTAMP), encounterLenght, experienceEst)
 		}
 		if planetCount == 0 { // No active planets found, we must have conquered them all! Ready to exit then
-			fmt.Printf("[%v] === ALL PLANETS HAVE BEEN CONQUERED ===\n- %v bosses detected in %v\n- Average wait time between bosses was %v", now.Format(TIMESTAMP), bossCount, startBoss.Sub(startScript).Round(time.Second), (startBoss.Sub(startScript) / time.Duration(bossCount)).Round(time.Second))
+			fmt.Println("\n" + lpad("-", "-", 60))
+			if bossCount > 0 {
+				fmt.Printf("[%v] === ALL PLANETS HAVE BEEN CONQUERED ===\n- %v bosses detected in %v\n- Average wait time between bosses was %v\n", now.Format(TIMESTAMP), bossCount, startBoss.Sub(startScript).Round(time.Second), (startBoss.Sub(startScript) / time.Duration(bossCount)).Round(time.Second))
+			} else {
+				fmt.Printf("[%v] === ALL PLANETS HAVE BEEN CONQUERED ===\n- Game Over Man, GAME OVER! (Ran for %v)\n", now.Format(TIMESTAMP), now.Sub(startScript).Round(time.Second))
+			}
 			goto ExitPoint
 		}
 
